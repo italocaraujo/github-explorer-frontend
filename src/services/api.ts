@@ -1,9 +1,15 @@
 import axios from 'axios'
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
+  : '/api'; 
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+  baseURL: process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3000/api'  
+    : 'https://github-explorer-backend-nfr5.onrender.com/api',  
   timeout: 5000
-})
+});
 
 export const githubService = {
   getProfile: (username: string) => api.get(`/github/profile/${username}`),
